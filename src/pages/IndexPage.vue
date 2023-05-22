@@ -2,41 +2,16 @@
   <q-page class="page_noticias flex justify-center">
     <div class="pagina_noticia-List__lits " >
       <div class="text-h1 q-py-lg">Noticias</div>
-      <div class="q-my-lg">
-        <q-list class="q-gutter-y-md">
-          <div v-for="(post, index) in listaNoticias" :key="index">
-            <q-card flat>
-              <q-card-section horizontal>
-                <div class="q-mr-md">
-                  <q-img :src="post.img" style="width: 150px;"></q-img>
-                </div>
-                <div class="column">
-                  <div class="text-bold text-h6 q-mb-sm">
-                    {{ post.titulo }}
-                  </div>
-                  <div>
-                    {{ post.data }}
-                  </div>
-                  <div>
-                    {{ post.descricao }}
-                  </div>
-
-                </div>
-                <div>
-                    <q-btn color="red" icon-right="send" label="Ler Mais" />
-                  </div>
-
-              </q-card-section>
-
-              <q-separator color="black" class="q-mt-md" />
-            </q-card>
-
-          </div>
-        </q-list>
-        <!-- lista de Noticias -->
+      <div class="noticias">
+        <div v-for="(post, index) in listaNoticias" :key="index" style="flex-direction: column;">
+          <q-card class="card">
+            post
+          </q-card>
+        </div>
       </div>
     </div>
   </q-page>
+
 </template>
 
 <script>
@@ -164,6 +139,16 @@ export default defineComponent({
       listaNoticias,
     };
   },
+
+  // setup() {
+  //   // const pokemons = ref([]);
+
+  //   const fetchPokemons = async () => api.get('/pokemon?limit=20').then((response) => {
+  //     console.log(response);
+  //   });
+
+  //   onMounted(fetchPokemons);
+  // },
 });
 
 </script>
@@ -174,5 +159,18 @@ export default defineComponent({
   &__list{
     width: 80%;
   }
+}
+.baixo{
+  position: relative;
+  top: 100px;
+  width: 100%;
+}
+.add{
+  position: fixed;
+
+  left:85%;
+  top: 85%;
+  z-index: 2;
+
 }
 </style>

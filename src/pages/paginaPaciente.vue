@@ -17,23 +17,20 @@
       </div>
       <div class="q-my-lg">
         <q-list class="q-gutter-y-md">
-          <div v-for="(post, index) in listaNoticias" :key="index">
+          <div class="q-ma-md q-pa-md"
+         style="display: flex; flex-wrap: wrap; justify-content: center;">
+          <div v-for="(post, index) in listaNoticias"
+          :key="index" class="q-ma-sm" style="flex-basis: 22%;">
             <q-card class="my-card" flat bordered>
               <q-card-section horizontal>
                 <q-card-section class="q-pt-xs">
-                  <div class="text-overline">Nome Do Paciente</div>
-                  <div class="text-h5 q-mt-sm q-mb-xs">Unidade de tratamento</div>
+                  <div class="text q-mt-sm q-mb-xs">Nome Do Paciente </div>
+                  <div class="text-overline">Unidade de tratamento</div>
                   <div class="text-caption text-grey">
                     nada nada nada
                   </div>
                 </q-card-section>
 
-                <q-card-section class="col-5 flex flex-center">
-                  <q-img
-                    class="rounded-borders"
-                    src="https://cdn-icons-png.flaticon.com/512/5110/5110429.png"
-                  />
-                </q-card-section>
               </q-card-section>
 
               <q-separator />
@@ -45,6 +42,7 @@
               </q-card-actions>
             </q-card>
 
+          </div>
           </div>
         </q-list>
         <!-- lista de Noticias -->

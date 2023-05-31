@@ -1,102 +1,104 @@
 <template>
   <q-page class="page flex justify-center">
-    <div class="q-pa-md" style="max-width: 400px">
+    <div class="q-pa-lg" style="max-width: 50%; width: 50%;">
+    <q-card class="my-card">
+      <q-form
+        @submit="onSubmit"
+        @reset="onReset"
+        class="q-gutter-md"
+      >
 
-    <q-form
-      @submit="onSubmit"
-      @reset="onReset"
-      class="q-gutter-md"
-    >
-    <div><h2>Noticia</h2></div>
-      <q-input
-        filled
-        v-model="titulo"
-        label="Título *"
-        hint="Título para sua Noticia"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Por favor digite um título']"
-      />
-      <q-input
-        filled
-        v-model="prefacio"
-        label="Préfacio *"
-        hint="Breve descrição da noticia"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Por favor digite um Préfacio']"
-      />
+      <div><h2>Noticia</h2></div>
+        <q-input
+          filled
+          v-model="titulo"
+          label="Título *"
+          hint="Título para sua Noticia"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Por favor digite um título']"
+        />
+        <q-input
+          filled
+          v-model="prefacio"
+          label="Préfacio *"
+          hint="Breve descrição da noticia"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Por favor digite um Préfacio']"
+        />
 
-      <q-file filled bottom-slots v-model="model" label="Imagem" counter>
-        <template v-slot:prepend>
-          <q-icon name="cloud_upload" @click.stop.prevent />
-        </template>
-        <template v-slot:append>
-          <q-icon name="close" @click.stop.prevent="model = null" class="cursor-pointer" />
-        </template>
+        <q-file filled bottom-slots v-model="model" label="Imagem" counter>
+          <template v-slot:prepend>
+            <q-icon name="cloud_upload" @click.stop.prevent />
+          </template>
+          <template v-slot:append>
+            <q-icon name="close" @click.stop.prevent="model = null" class="cursor-pointer" />
+          </template>
 
-        <template v-slot:hint>
-          Imagem para ser anexada a notica
-        </template>
-      </q-file>
+          <template v-slot:hint>
+            Imagem para ser anexada a notica
+          </template>
+        </q-file>
 
-      <q-editor
-                  v-model="selectedNoteBody"
-                  min-height="5rem"
-                  label="Nota"
-                  filled
-                  autogrow
-                  :rules="[(val) => val.length != 0 || 'Nota inválida']"
-                  :toolbar="[
-                    [
-                      {
-                        label: $q.lang.editor.align,
-                        icon: $q.iconSet.editor.align,
-                        fixedLabel: true,
-                        list: 'only-icons',
-                        options: ['left', 'center', 'right', 'justify'],
-                      },
-                    ],
-                    [
-                      'bold',
-                      'italic',
-                      'strike',
-                      'underline',
+        <q-editor
+                    v-model="selectedNoteBody"
+                    min-height="5rem"
+                    label="Nota"
+                    filled
+                    autogrow
+                    :rules="[(val) => val.length != 0 || 'Nota inválida']"
+                    :toolbar="[
+                      [
+                        {
+                          label: $q.lang.editor.align,
+                          icon: $q.iconSet.editor.align,
+                          fixedLabel: true,
+                          list: 'only-icons',
+                          options: ['left', 'center', 'right', 'justify'],
+                        },
+                      ],
+                      [
+                        'bold',
+                        'italic',
+                        'strike',
+                        'underline',
 
-                    ],
-                    ['token', 'custom_btn'],
-                    ['print', 'fullscreen'],
-                    [
+                      ],
+                      ['token', 'custom_btn'],
+                      ['print', 'fullscreen'],
+                      [
 
-                      {
-                        label: $q.lang.editor.fontSize,
-                        icon: $q.iconSet.editor.fontSize,
-                        fixedLabel: true,
-                        fixedIcon: true,
-                        list: 'no-icons',
-                        options: [
-                          'size-1',
-                          'size-2',
-                          'size-3',
-                          'size-4',
-                          'size-5',
-                          'size-6',
-                          'size-7',
-                        ],
-                      },
+                        {
+                          label: $q.lang.editor.fontSize,
+                          icon: $q.iconSet.editor.fontSize,
+                          fixedLabel: true,
+                          fixedIcon: true,
+                          list: 'no-icons',
+                          options: [
+                            'size-1',
+                            'size-2',
+                            'size-3',
+                            'size-4',
+                            'size-5',
+                            'size-6',
+                            'size-7',
+                          ],
+                        },
 
-                    ],
+                      ],
 
-                  ]"
+                    ]"
 
-                />
+                  />
 
-      <div>
-        <q-btn label="Enviar" type="submit" icon="send" color="red"/>
-        <q-btn label="Resetar" type="reset" color="green" flat class="q-ml-sm" />
-        <q-btn label="Cancelar" to="/" color="primary" flat/>
-      </div>
-    </q-form>
+        <div>
+          <q-btn label="Enviar" type="submit" icon="send" color="red"/>
 
-    </div>
+          <q-btn label="Cancelar" to="/" color="primary" flat/>
+        </div>
+      </q-form>
+  </q-card>
+  </div>
+
   </q-page>
 </template>
 
@@ -140,15 +142,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.page {
 
-  &__list{
-    width: 80%;
-  }
-}
 .baixo{
 position: relative;
 top: 100px;
 width: 100%;
+}
+.my-card{
+  top: 10%;
+  padding: 10%;
+  width: 100%;
 }
 </style>

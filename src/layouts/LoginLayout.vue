@@ -10,20 +10,9 @@
           TB Koch
         </q-toolbar-title>
 
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
 
-      <q-tabs align="right">
-        <q-route-tab to="/home" label="Notícias" />
-        <q-route-tab to="/pacientes" label="Pacientes" />
-        <q-route-tab to="/paginaSobre" label="Sobre nós" />
-      </q-tabs>
-
     </q-header>
-
-    <q-drawer  v-model="rightDrawerOpen" side="right" bordered>
-      <!-- drawer content -->
-    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -68,12 +57,6 @@ export default {
     return {
       linkList,
     };
-  },
-
-  computed: {
-    layout() {
-      return this.$route.meta.layout || 'default'; // Definir um layout padrão se a meta 'layout' não estiver presente
-    },
   },
 };
 

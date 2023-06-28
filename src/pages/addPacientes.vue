@@ -1,58 +1,86 @@
 <template>
   <q-page class="page flex justify-center">
-    <div class="q-pa-lg" style="max-width: 50%; width: 50%;">
-      <q-card class="card">
-        <div class="item" style="max-width: 60%; width: 60%; padding: auto;">
-        <h4 class="campo"><q-icon name="edit" color="red" /> Dados Pessoais </h4>
-          <q-input
-          filled
-          type="text"
-          v-model="nome"
-          label="Nome do Paciente *"
-          lazy-rules
-          class="campo"
-          :rules="[
-            val => val !== null && val !== '' || 'Por favor digite um nome valido !',
-            val => val > 0 && val < 100 || 'Por favor digite um nome valido !'
-          ]"
-        />
-        <q-input filled v-model="date" mask="date" :rules="['date']">
-          <template v-slot:append>
-            <q-icon name="event" class="cursor-pointer">
-              <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                <q-date v-model="date">
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup label="Close" color="primary" flat />
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
+    <div class="q-pa-lg" style="min-width: 50%; max-width: 50%;">
 
-        <!-- <div class="q-gutter-md row items-start">
-          <div style="font-size: medium; color: grey;">Data de Nascimento</div>
-          <q-date class="campo" v-model="date" />
-        </div> -->
-
-        <q-select  filled v-model="naturalidade" :options="options" label="Naturalidade" />
+    <q-card class="my-card">
+      <q-form
+        @submit="onSubmit"
+        @reset="onReset"
+        class="q-gutter-md"
+      >
+      <h4 class="campo"><q-icon name="edit" color="red" /> Dados Pessoais </h4>
 
         <q-input
           filled
-          type="text"
-          v-model="nomemae"
-          label="Nome da Mãe *"
+          v-model="titulo"
+          label="Nome *"
+          hint="Nome do Paciente"
           lazy-rules
-          style="margin-bottom: 15px; margin-top: 15px;"
-          :rules="[
-            val => val !== null && val !== '' || 'Por favor digite um nome valido !',
-            val => val > 0 && val < 100 || 'Por favor digite um nome valido !'
-          ]"
+          :rules="[ val => val && val.length > 0 || 'Por favor digite um nome']"
         />
 
-      </div>
+        <q-input
+          filled
+          v-model="prefacio"
+          label="Nome da Mãe *"
+          hint="Nome da Mãe do Paciente"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Por favor digite nome da Mãe']"
+        />
 
-      <div class="item" style="max-width: 60%; width: 60%; padding: auto;">
+          <q-input filled v-model="date"  label="Data de Nascimento *"
+          hint="Data de nascimento do paciente" mask="date" :rules="['date']">
+            <template v-slot:append>
+              <q-icon name="event" class="cursor-pointer">
+                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                  <q-date v-model="date">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup label="Close" color="primary" flat />
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+
+        <h4 class="campo"><q-icon name="edit" color="red" /> Endereço </h4>
+        <q-input
+          filled
+          v-model="prefacio"
+          label="Endereço*"
+          hint="Rua, Bairro e Logadouro"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Por favor digite nome da Mãe']"
+        />
+        <q-input
+          filled
+          v-model="prefacio"
+          label="Município*"
+          hint="Rua, Bairro e Logadouro"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Por favor digite nome da Mãe']"
+        />
+        <q-input
+          filled
+          v-model="prefacio"
+          label="Referência*"
+          hint="Ponto de Referência"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Por favor digite nome da Mãe']"
+        />
+        <q-input
+          filled
+          type="number"
+          v-model="numero"
+          label="Nº Telefone *"
+          hint="Número para contato"
+          lazy-rules
+          class="campo"
+          :rules="[
+            val => val !== null && val !== '' || 'Please type your age',
+            val => val > 0 && val < 100 || 'Please type a real age'
+          ]"
+        />
         <h4 class="campo"><q-icon name="edit" color="red" /> SUS </h4>
         <div class="">
             <div class="q-px-sm">
@@ -67,88 +95,97 @@
             <q-radio v-model="shape" checked-icon="task_alt"
             unchecked-icon="panorama_fish_eye" val="polygon" label="Não se aplica" />
         </div>
-        <q-input
-          filled
-          type="number"
-          v-model="cartaoSUS"
-          label="Nº Cartão SUS *"
-          lazy-rules
-          class="campo"
-          :rules="[
-            val => val !== null && val !== '' || 'Digite um cartão valido',
-          ]"
-        />
+        <q-file filled bottom-slots v-model="img" label="Imagem" counter>
+          <template v-slot:prepend>
+            <q-icon name="cloud_upload" @click.stop.prevent />
+          </template>
+          <template v-slot:append>
+            <q-icon name="close" @click.stop.prevent="model = null" class="cursor-pointer" />
+          </template>
 
-        <q-input
-          filled
-          type="number"
-          v-model="numero"
-          label="Nº Sinan *"
-          lazy-rules
-          class="campo"
-          :rules="[
-            val => val !== null && val !== '' || 'Digite um numero valido',
-          ]"
-        />
+          <template v-slot:hint>
+            Imagem
+          </template>
+        </q-file>
 
-        <q-input
-          filled
-          type="text"
-          v-model="trat"
-          label="Unidade de Tratamento *"
-          lazy-rules
-          class="campo"
-          :rules="[
-            val => val !== null && val !== '' || 'Digite uma Unidade que exista!',
-          ]"
-        />
+        <div>
+          <q-btn label="Enviar" type="submit"  @click="submitForm" icon="send" color="red"/>
 
-        <q-input
-          filled
-          type="text"
-          v-model="cad"
-          label="Unidade de Cadastro*"
-          lazy-rules
-          class="campo"
-          :rules="[
-            val => val !== null && val !== '' || 'Digite uma Unidade que exista!',
-          ]"
-        />
-      </div>
-      </q-card>
-    </div>
+          <q-btn label="Cancelar" to="/home" color="primary" flat/>
+        </div>
+      </q-form>
+  </q-card>
+  </div>
+
   </q-page>
 </template>
 
 <script>
+
 import { defineComponent, ref } from 'vue';
+import { api } from 'boot/axios';
 
 export default defineComponent({
-
+  data() {
+    return {
+      titulo: '',
+      prefacio: '',
+      img: null, // Alterado para null em vez de uma string vazia
+      descricao: '',
+      date: ref('2000/00/00'),
+      loading: false,
+    };
+  },
   setup() {
     return {
       model: ref(null),
-      options: [
-        'Brasil', 'Estados Unidos', 'Equador', 'etc',
-      ],
     };
   },
+  methods: {
+    async submitForm(event) {
+      event.preventDefault();
 
+      try {
+        const token = localStorage.getItem('token');
+        const formData = new FormData(); // Criar objeto FormData
+
+        // Adicionar campos ao objeto FormData
+        formData.append('titulo', this.titulo);
+        formData.append('img', this.img);
+        formData.append('desc_curta', this.prefacio);
+        formData.append('desc_longa', this.descricao);
+
+        const response = await api.post('https://api-koch.onrender.com/create-new', formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data', // Definir o cabeçalho correto para enviar o arquivo
+          },
+        });
+
+        console.log(response);
+        this.$router.push('/home');
+      } catch (error) {
+        console.log(error);
+        alert(error.request.response);
+      } finally {
+        this.loading = false; // Desativar a animação de carregamento
+      }
+    },
+  },
 });
 
 </script>
 
 <style lang="scss">
-.conteiner{
-  background-color: blueviolet;
+
+.baixo{
+position: relative;
+top: 100px;
+width: 100%;
 }
-.card{
-  padding: 8%;
-  background-color: #ffffff;
-  border-radius: 2%;
-  display: flex;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 10px;
-  justify-items: center;
+.my-card{
+  top: 10%;
+  padding: 10%;
+  width: 100%;
 }
 </style>

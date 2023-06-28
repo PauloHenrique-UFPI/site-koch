@@ -13,18 +13,28 @@ const routes = [
       { path: '/paginaSobre', name: 'paginaSobre', component: () => import('pages/paginaSobre.vue') },
       { path: '/addNoticias', name: 'addNoticia', component: () => import('pages/addNoticias.vue') },
       { path: '/addPacientes', name: 'addPaciente', component: () => import('pages/addPacientes.vue') },
+      {
+        path: '/noticia/:id',
+        name: 'NoticiaPage',
+        component: () => import('pages/noticia.vue'),
+      },
+      {
+        path: '/paciente/:id',
+        name: 'PacientePage',
+        component: () => import('pages/paciente.vue'),
+      },
+
     ],
   },
+
   {
     path: '',
     component: LoginLayout,
     children: [
-      { path: '', component: LoginPage },
+      { path: '', name: 'login_', component: LoginPage },
     ],
   },
 
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

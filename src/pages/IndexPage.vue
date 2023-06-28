@@ -33,7 +33,8 @@
             style="display: flex; flex-wrap: wrap; justify-content: center;">
               <div v-for="(post, index) in listaNoticias"
               :key="index" class="q-ma-sm" style="flex-basis: 33.33%;">
-                <q-card class="card" @click="exibirConfirmacaoDeletar(post.id, index)">
+                <q-card class="card" @click="deletarAtivo ?
+                exibirConfirmacaoDeletar(post.id, index) : exibirNoticia(post)">
                   <div class="titulo"> {{ post.titulo }} </div>
                   <q-img
                     :src="post.img"
@@ -133,6 +134,12 @@ export default defineComponent({
         this.cancelarExclusao();
       }
     },
+
+    exibirNoticia(post) {
+      const { id } = post;
+      this.$router.push({ name: 'NoticiaPage', params: { id } });
+    },
+
   },
 });
 
